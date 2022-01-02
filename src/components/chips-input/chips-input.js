@@ -8,6 +8,8 @@ export default function ChipsInput({ value, onChange }) {
   const [warning, setWarning] = useState(false);
   const spanEl = useRef(5);
   const inputEl = useRef(null);
+  const wrapperEl = useRef(null);
+  const placeholderEl = useRef(null);
 
   const changeHandler = (event) => {
     setInput(event.target.value);
@@ -25,8 +27,10 @@ export default function ChipsInput({ value, onChange }) {
     }
   };
 
-  const inputFocus = () => {
-    inputEl.current?.focus();
+  const inputFocus = (event) => {
+    if(event.target === wrapperEl.current || event.target === placeholderEl.current) {
+      inputEl.current?.focus();
+    }
   };
 
   const addChips = (event) => {
@@ -43,7 +47,7 @@ export default function ChipsInput({ value, onChange }) {
 
   const placeholder =
     input.length === 0 && chips.length === 0 ? (
-      <div className={styles.placeholder}>Введите ключевые слова</div>
+      <div className={styles.placeholder} ref={placeholderEl}>Введите ключевые слова</div>
     ) : null;
 
   const warningEl = warning ? (
@@ -52,7 +56,7 @@ export default function ChipsInput({ value, onChange }) {
 
   return (
     <div className={styles.chips_input}>
-      <div className={styles.wrapper} onClick={inputFocus}>
+      <div className={styles.wrapper} onClick={inputFocus} ref={wrapperEl}>
         {chips.map((chip, index) => (
           <ChipsItem key={index} chip={chip} input={input} />
         ))}

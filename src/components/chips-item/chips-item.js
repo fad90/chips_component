@@ -8,6 +8,7 @@ export default function ChipsItem({  index, chip, input }) {
     const changeHandlerItem = (event) => {
         setItem(event.target.value)
     }
+
     return (
         <div className={styles.chip}>
             <span className={styles.hide_item} ref={hideEl}>{item}</span>
@@ -16,7 +17,6 @@ export default function ChipsItem({  index, chip, input }) {
             value={item}
             onChange={changeHandlerItem}
             style={{ width: hideEl.current.offsetWidth + 8 + "px" }}
-            
             />
             <span className={styles.remove}>&times;</span>
         </div>
