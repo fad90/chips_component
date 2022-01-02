@@ -42,6 +42,7 @@ export default function ChipsInput({ value, onChange }) {
       event.preventDefault();
       setChips([...chips, event.target.value]);
       setInput("");
+      setWarning(false);
     }
   };
 

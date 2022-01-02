@@ -1,13 +1,18 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from './chips-item.module.scss';
 
 export default function ChipsItem({  index, chip, input }) {
     const [item, setItem] = useState(chip)
-    const hideEl = useRef(5);
+    const [width, setWidth] = useState(0);
+    const hideEl = useRef();
 
     const changeHandlerItem = (event) => {
         setItem(event.target.value)
     }
+
+    useEffect(() => {
+        setWidth(hideEl.current.offsetWidth)
+      }, [item])
 
     return (
         <div className={styles.chip}>
@@ -16,7 +21,7 @@ export default function ChipsItem({  index, chip, input }) {
             className={styles.item}
             value={item}
             onChange={changeHandlerItem}
-            style={{ width: hideEl.current.offsetWidth + 8 + "px" }}
+            style={{ width: width + "px" }}
             />
             <span className={styles.remove}>&times;</span>
         </div>
