@@ -1,0 +1,62 @@
+.chips_input {
+  width: 100%;
+  min-height: 50px;
+}
+.wrapper {
+  width: 100%;
+  min-height: 50px;
+  background: #eef3fb;
+  border-radius: 5px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  position: relative; 
+}
+.container,
+.hide_el,
+.input {
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+}
+.hide_el {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  height: 0;
+}
+.input {
+  padding: 0px;
+  outline: none;
+  color: #4b5e80;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  outline: none;
+}
+
+/*2-ой вариант*/
+// .input,
+// .hide_el {
+//   font: inherit;
+//   margin: 0;
+//   padding: 0;
+// }
+// .container {
+//     overflow: hidden;
+//     display: inline-block;
+// }
+// .input {
+//     box-sizing: content-box;
+//     width: 2px;
+// }
+// .hide_el {
+//     position: absolute;
+//     top: 0px;
+//     left: 0px;
+//     visibility: hidden;
+//     height: 0px;
+//     overflow: scroll;
+//     text-transform: none;
+// }

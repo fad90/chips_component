@@ -1,0 +1,39 @@
+.chip,
+.hide_item,
+.item,
+.remove {
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.chip {
+  margin: 3px;
+  padding: 5px 7px;
+  border-radius: 5px;
+  background: #c3e4ff;
+}
+
+.hide_item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  height: 0;
+}
+
+.item {
+  padding: 0px;
+  outline: none;
+  color: #054175;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  outline: none;
+}
+
+.remove {
+  cursor: pointer;
+  color: #1b75c4;
+  font-weight: 600;
+  font-size: 16px;
+}
