@@ -49,6 +49,10 @@ export default function ChipsInput({ value, onChange }) {
       setChips([...chips, event.target.value]);
       setInput("");
       setWarning(false);
+    } else if (event.key === "Backspace") {
+      // chips.splice(chips.length-1, 1)
+      if(input.length === 0)
+      setChips(chips.slice(0, chips.length-1))
     }
   };
 
