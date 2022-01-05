@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import styles from "./chips-input.module.scss";
 import ChipsItem from "../chips-item";
+import { useEffect } from "react/cjs/react.development";
 
 export default function ChipsInput({ value, onChange }) {
   const [input, setInput] = useState("");
@@ -10,6 +11,11 @@ export default function ChipsInput({ value, onChange }) {
   const inputEl = useRef(null);
   const wrapperEl = useRef(null);
   const placeholderEl = useRef(null);
+
+
+  useEffect(() => {
+    setChips(chips)
+  }, [chips])
 
   const changeHandler = (event) => {
     setInput(event.target.value);
@@ -55,11 +61,18 @@ export default function ChipsInput({ value, onChange }) {
     <div className={styles.warning}>Закройте кавычки с двух сторон</div>
   ) : null;
 
+  
   return (
     <div className={styles.chips_input}>
       <div className={styles.wrapper} onClick={inputFocus} ref={wrapperEl}>
         {chips.map((chip, index) => (
-          <ChipsItem key={index} chip={chip} input={input} />
+          <ChipsItem key={new Date().getTime() + index}
+                     chip={chip} 
+                     input={input}
+                     setChips={setChips} 
+                     allChips={chips}
+                     idx={index}
+                     />
         ))}
         <div className={styles.container}>
           <span className={styles.hide_el} ref={spanEl}>
