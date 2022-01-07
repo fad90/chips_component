@@ -7,15 +7,11 @@ export default function ChipsInput({ value, onChange }) {
   const [input, setInput] = useState("");
   const [chips, setChips] = useState([]);
   const [warning, setWarning] = useState(false);
+
   const spanEl = useRef(5);
   const inputEl = useRef(null);
   const wrapperEl = useRef(null);
   const placeholderEl = useRef(null);
-
-
-  useEffect(() => {
-    setChips(chips)
-  }, [chips])
 
   const changeHandler = (event) => {
     setInput(event.target.value);
@@ -34,7 +30,10 @@ export default function ChipsInput({ value, onChange }) {
   };
 
   const inputFocus = (event) => {
-    if(event.target === wrapperEl.current || event.target === placeholderEl.current) {
+    if (
+      event.target === wrapperEl.current ||
+      event.target === placeholderEl.current
+    ) {
       inputEl.current?.focus();
     }
   };
@@ -50,33 +49,38 @@ export default function ChipsInput({ value, onChange }) {
       setInput("");
       setWarning(false);
     } else if (event.key === "Backspace") {
-      // chips.splice(chips.length-1, 1)
-      if(input.length === 0)
-      setChips(chips.slice(0, chips.length-1))
+      if (input.length === 0) setChips(chips.slice(0, chips.length - 1));
     }
   };
 
+
   const placeholder =
     input.length === 0 && chips.length === 0 ? (
-      <div className={styles.placeholder} ref={placeholderEl}>Введите ключевые слова</div>
+      <div className={styles.placeholder} ref={placeholderEl}>
+        Введите ключевые слова
+      </div>
     ) : null;
 
   const warningEl = warning ? (
     <div className={styles.warning}>Закройте кавычки с двух сторон</div>
   ) : null;
 
-  
   return (
     <div className={styles.chips_input}>
-      <div className={styles.wrapper} onClick={inputFocus} ref={wrapperEl}>
+      <div
+        className={styles.wrapper}
+        onClick={inputFocus}
+        ref={wrapperEl}
+      >
         {chips.map((chip, index) => (
-          <ChipsItem key={new Date().getTime() + index}
-                     chip={chip} 
-                     input={input}
-                     setChips={setChips} 
-                     allChips={chips}
-                     idx={index}
-                     />
+          <ChipsItem
+            key={new Date().getTime() + index}
+            chip={chip}
+            input={input}
+            setChips={setChips}
+            allChips={chips}
+            idx={index}
+          />
         ))}
         <div className={styles.container}>
           <span className={styles.hide_el} ref={spanEl}>
