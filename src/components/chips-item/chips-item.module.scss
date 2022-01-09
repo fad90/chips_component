@@ -12,6 +12,8 @@
   padding: 5px 7px;
   border-radius: 5px;
   background: #c3e4ff;
+  max-width: 490px;
+  display: flex;
 }
 
 .hide_item {
@@ -29,6 +31,7 @@
   background-color: rgba(0, 0, 0, 0);
   border: none;
   outline: none;
+  max-width: 470px;
 }
 
 .remove {
@@ -36,6 +39,7 @@
   color: #1b75c4;
   font-weight: 600;
   font-size: 16px;
+  padding: 0 3px;
 }
 
 .selected_chip {

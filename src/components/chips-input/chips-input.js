@@ -3,6 +3,7 @@ import styles from "./chips-input.module.scss";
 import ChipsItem from "../chips-item";
 import { useEffect } from "react/cjs/react.development";
 
+
 export default function ChipsInput({ value, onChange }) {
   const [input, setInput] = useState("");
   const [chips, setChips] = useState([]);
@@ -22,6 +23,7 @@ export default function ChipsInput({ value, onChange }) {
       if (input.split('"').length % 2 === 1) {
         setWarning(false);
         setChips([...chips, input]);
+        value ? onChange(`${value}, ${input}`) : onChange(input);
         setInput("");
       } else {
         setWarning(true);
@@ -48,11 +50,19 @@ export default function ChipsInput({ value, onChange }) {
       setChips([...chips, event.target.value]);
       setInput("");
       setWarning(false);
+      value
+        ? onChange(`${value}, ${event.target.value}`)
+        : onChange(event.target.value);
     } else if (event.key === "Backspace") {
-      if (input.length === 0) setChips(chips.slice(0, chips.length - 1));
+      if (input.length === 0) {
+        setChips(chips.slice(0, chips.length - 1));
+        const valueToArr = value.split(",");
+        const newValueArr = valueToArr.slice(0, valueToArr.length - 1);
+        const newValue = newValueArr.join();
+        onChange(newValue);
+      }
     }
   };
-
 
   const placeholder =
     input.length === 0 && chips.length === 0 ? (
@@ -67,19 +77,16 @@ export default function ChipsInput({ value, onChange }) {
 
   return (
     <div className={styles.chips_input}>
-      <div
-        className={styles.wrapper}
-        onClick={inputFocus}
-        ref={wrapperEl}
-      >
+      <div className={styles.wrapper} onClick={inputFocus} ref={wrapperEl}>
         {chips.map((chip, index) => (
           <ChipsItem
-            key={new Date().getTime() + index}
+            key={chip + index}
             chip={chip}
-            input={input}
             setChips={setChips}
             allChips={chips}
             idx={index}
+            onChange={onChange}
+            value={value}
           />
         ))}
         <div className={styles.container}>

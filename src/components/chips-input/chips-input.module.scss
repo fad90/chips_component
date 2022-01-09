@@ -20,6 +20,10 @@
   font-size: 15px;
   font-weight: 500;
 }
+.container {
+  max-width: 500px;
+  overflow: hidden;
+}
 .hide_el {
   position: absolute;
   top: 0;
@@ -45,27 +49,3 @@
   color: #d64747;
   font-weight: 500;
 }
-/*2-ой вариант*/
-// .input,
-// .hide_el {
-//   font: inherit;
-//   margin: 0;
-//   padding: 0;
-// }
-// .container {
-//     overflow: hidden;
-//     display: inline-block;
-// }
-// .input {
-//     box-sizing: content-box;
-//     width: 2px;
-// }
-// .hide_el {
-//     position: absolute;
-//     top: 0px;
-//     left: 0px;
-//     visibility: hidden;
-//     height: 0px;
-//     overflow: scroll;
-//     text-transform: none;
-// }

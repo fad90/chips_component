@@ -1,12 +1,14 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import styles from "./chips-item.module.scss";
 
-export default function ChipsItem({
+
+export default React.memo(function ChipsItem({
   idx,
   chip,
-  input,
   setChips,
   allChips,
+  onChange,
+  value,
 }) {
   const [item, setItem] = useState(chip);
   const [width, setWidth] = useState(0);
@@ -26,6 +28,13 @@ export default function ChipsItem({
     const after = allChips.slice(indexToRemove + 1);
     const newArray = [...before, ...after];
     setChips(newArray);
+
+    const valueToArr = value.split(",");
+    const valueBefore = valueToArr.slice(0, indexToRemove);
+    const valueAfter = valueToArr.slice(indexToRemove + 1);
+    const valueArray = [...valueBefore, ...valueAfter];
+    const newValue = valueArray.join();
+    onChange(newValue);
   };
 
   const blurHandlerItem = (indexToSplit) => {
@@ -35,13 +44,22 @@ export default function ChipsItem({
     const newArray = [...before, ...splitElement, ...after];
     const filteredArray = newArray.filter((item) => item.length !== 0);
     setChips(filteredArray);
+
+    const valueToArr = value.split(",");
+    const valueBefore = valueToArr.slice(0, indexToSplit);
+    const valueAfter = valueToArr.slice(indexToSplit + 1);
+    const splitEl = item.split(",");
+    const changeSplitEl = splitEl.map((item) => {
+      return ` ${item}`;
+    });
+    const valueArray = [...valueBefore, ...changeSplitEl, ...valueAfter];
+    const filteredValueArray = valueArray.filter((item) => item.length !== 0);
+    const newValue = filteredValueArray.join();
+    onChange(newValue);
   };
 
   return (
-    <div
-      className={styles.chip}
-      ref={chipEl}
-    >
+    <div className={styles.chip} ref={chipEl}>
       <span className={styles.hide_item} ref={hideEl}>
         {item}
       </span>
@@ -58,4 +76,4 @@ export default function ChipsItem({
       </span>
     </div>
   );
-}
+});
