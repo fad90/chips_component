@@ -8,9 +8,6 @@ export default function ChipsInput({ value, onChange }) {
   const [input, setInput] = useState("");
   const [chips, setChips] = useState([]);
   const [warning, setWarning] = useState(false);
-  const [selecting, setSelecting] = useState(false);
-  const [start, setStart] = useState(0);
-  const [end, setEnd] = useState(0);
 
   const spanEl = useRef(5);
   const inputEl = useRef(null);
@@ -90,12 +87,6 @@ export default function ChipsInput({ value, onChange }) {
             idx={index}
             onChange={onChange}
             value={value}
-            selecting={selecting}
-            setSelecting={setSelecting}
-            start={start}
-            setStart={setStart}
-            end={end}
-            setEnd={setEnd}
           />
         ))}
         <div className={styles.container}>

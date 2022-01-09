@@ -7,13 +7,7 @@ export default React.memo(function ChipsItem({
   setChips,
   allChips,
   onChange,
-  value,
-  selecting,
-  setSelecting,
-  start,
-  setStart,
-  end,
-  setEnd
+  value
 }) {
   const [item, setItem] = useState(chip);
   const [width, setWidth] = useState(0);
@@ -58,7 +52,8 @@ export default React.memo(function ChipsItem({
 
     const {valueBefore, valueAfter} = valueBeforeAfter(value, idx)
     const splitEl = item.split(",");
-    const changeSplitEl = splitEl.map((item) => {
+    const withoutEmpty = splitEl.filter((item) => item.length !== 0)
+    const changeSplitEl = withoutEmpty.map((item) => {
       return ` ${item}`;
     });
     const valueArray = [...valueBefore, ...changeSplitEl, ...valueAfter];
@@ -67,38 +62,10 @@ export default React.memo(function ChipsItem({
     onChange(newValue);
   };
 
-  let beginSelection = (i) => {
-    setSelecting(true);
-    setStart(i);
-    updateSelection(i);
-    console.log(`start: ${i}`);
-  };
-
-  let endSelection = (i = end) => {
-    setSelecting(false);
-    updateSelection(i);
-    console.log(`end: ${i}`);
-  };
-
-  let updateSelection = (i) => {
-    if (selecting) {
-      setEnd(i);
-      console.log(`update: ${i}`);
-    }
-  };
-
   return (
     <div
-      className={
-        ((end <= idx && idx <= start) || (start <= idx && idx <= end))
-          ? `${styles.selected_chip}`
-          : `${styles.chip}`
-      }
-      // className={styles.chip}
+      className={styles.chip}
       ref={chipEl}
-      onMouseDown={() => beginSelection(idx)}
-      onMouseUp={() => endSelection(idx)}
-      onMouseMove={() => updateSelection(idx)}
     >
       <span className={styles.hide_item} ref={hideEl}>
         {item}
