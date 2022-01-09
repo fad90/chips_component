@@ -9,7 +9,7 @@ export default function ChipsInput({ value, onChange }) {
   const [chips, setChips] = useState([]);
   const [warning, setWarning] = useState(false);
 
-  const spanEl = useRef(5);
+  const spanEl = useRef(0);
   const inputEl = useRef(null);
   const wrapperEl = useRef(null);
   const placeholderEl = useRef(null);
