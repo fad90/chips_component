@@ -7,7 +7,7 @@ export default React.memo(function ChipsItem({
   setChips,
   allChips,
   onChange,
-  value
+  value,
 }) {
   const [item, setItem] = useState(chip);
   const [width, setWidth] = useState(0);
@@ -22,21 +22,20 @@ export default React.memo(function ChipsItem({
     setWidth(hideEl.current.offsetWidth);
   }, [item]);
 
-  
   const valueBeforeAfter = (items, index) => {
     const valueToArr = items.split(",");
     const valueBefore = valueToArr.slice(0, index);
     const valueAfter = valueToArr.slice(index + 1);
-    return {valueBefore, valueAfter}
-  }
+    return { valueBefore, valueAfter };
+  };
 
   const removeChips = (indexToRemove) => {
     const before = allChips.slice(0, indexToRemove);
     const after = allChips.slice(indexToRemove + 1);
     const newArray = [...before, ...after];
     setChips(newArray);
-    
-    const {valueBefore, valueAfter} = valueBeforeAfter(value, idx)
+
+    const { valueBefore, valueAfter } = valueBeforeAfter(value, idx);
     const valueArray = [...valueBefore, ...valueAfter];
     const newValue = valueArray.join();
     onChange(newValue);
@@ -50,9 +49,9 @@ export default React.memo(function ChipsItem({
     const filteredArray = newArray.filter((item) => item.length !== 0);
     setChips(filteredArray);
 
-    const {valueBefore, valueAfter} = valueBeforeAfter(value, idx)
+    const { valueBefore, valueAfter } = valueBeforeAfter(value, idx);
     const splitEl = item.split(",");
-    const withoutEmpty = splitEl.filter((item) => item.length !== 0)
+    const withoutEmpty = splitEl.filter((item) => item.length !== 0);
     const changeSplitEl = withoutEmpty.map((item) => {
       return ` ${item}`;
     });
@@ -63,10 +62,7 @@ export default React.memo(function ChipsItem({
   };
 
   return (
-    <div
-      className={styles.chip}
-      ref={chipEl}
-    >
+    <div className={styles.chip} ref={chipEl}>
       <span className={styles.hide_item} ref={hideEl}>
         {item}
       </span>

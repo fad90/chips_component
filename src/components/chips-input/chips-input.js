@@ -3,7 +3,6 @@ import styles from "./chips-input.module.scss";
 import ChipsItem from "../chips-item";
 import { useEffect } from "react/cjs/react.development";
 
-
 export default function ChipsInput({ value, onChange }) {
   const [input, setInput] = useState("");
   const [chips, setChips] = useState([]);
