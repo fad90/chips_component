@@ -1,6 +1,5 @@
-import React, { useState, useRef, useEffect, useMemo } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./chips-item.module.scss";
-
 
 export default React.memo(function ChipsItem({
   idx,
@@ -9,6 +8,12 @@ export default React.memo(function ChipsItem({
   allChips,
   onChange,
   value,
+  selecting,
+  setSelecting,
+  start,
+  setStart,
+  end,
+  setEnd
 }) {
   const [item, setItem] = useState(chip);
   const [width, setWidth] = useState(0);
@@ -23,31 +28,35 @@ export default React.memo(function ChipsItem({
     setWidth(hideEl.current.offsetWidth);
   }, [item]);
 
+  
+  const valueBeforeAfter = (items, index) => {
+    const valueToArr = items.split(",");
+    const valueBefore = valueToArr.slice(0, index);
+    const valueAfter = valueToArr.slice(index + 1);
+    return {valueBefore, valueAfter}
+  }
+
   const removeChips = (indexToRemove) => {
     const before = allChips.slice(0, indexToRemove);
     const after = allChips.slice(indexToRemove + 1);
     const newArray = [...before, ...after];
     setChips(newArray);
-
-    const valueToArr = value.split(",");
-    const valueBefore = valueToArr.slice(0, indexToRemove);
-    const valueAfter = valueToArr.slice(indexToRemove + 1);
+    
+    const {valueBefore, valueAfter} = valueBeforeAfter(value, idx)
     const valueArray = [...valueBefore, ...valueAfter];
     const newValue = valueArray.join();
     onChange(newValue);
   };
 
   const blurHandlerItem = (indexToSplit) => {
+    const splitElement = item.split(",");
     const before = allChips.slice(0, indexToSplit);
     const after = allChips.slice(indexToSplit + 1);
-    const splitElement = item.split(",");
     const newArray = [...before, ...splitElement, ...after];
     const filteredArray = newArray.filter((item) => item.length !== 0);
     setChips(filteredArray);
 
-    const valueToArr = value.split(",");
-    const valueBefore = valueToArr.slice(0, indexToSplit);
-    const valueAfter = valueToArr.slice(indexToSplit + 1);
+    const {valueBefore, valueAfter} = valueBeforeAfter(value, idx)
     const splitEl = item.split(",");
     const changeSplitEl = splitEl.map((item) => {
       return ` ${item}`;
@@ -58,8 +67,39 @@ export default React.memo(function ChipsItem({
     onChange(newValue);
   };
 
+  let beginSelection = (i) => {
+    setSelecting(true);
+    setStart(i);
+    updateSelection(i);
+    console.log(`start: ${i}`);
+  };
+
+  let endSelection = (i = end) => {
+    setSelecting(false);
+    updateSelection(i);
+    console.log(`end: ${i}`);
+  };
+
+  let updateSelection = (i) => {
+    if (selecting) {
+      setEnd(i);
+      console.log(`update: ${i}`);
+    }
+  };
+
   return (
-    <div className={styles.chip} ref={chipEl}>
+    <div
+      className={
+        ((end <= idx && idx <= start) || (start <= idx && idx <= end))
+          ? `${styles.selected_chip}`
+          : `${styles.chip}`
+      }
+      // className={styles.chip}
+      ref={chipEl}
+      onMouseDown={() => beginSelection(idx)}
+      onMouseUp={() => endSelection(idx)}
+      onMouseMove={() => updateSelection(idx)}
+    >
       <span className={styles.hide_item} ref={hideEl}>
         {item}
       </span>
